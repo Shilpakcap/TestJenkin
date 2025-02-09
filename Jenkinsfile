@@ -1,16 +1,20 @@
 pipeline {
     agent any
     stages {
-        stage('Build') {
+        stage('Checkout') {
             steps {
-                echo 'Building...'
-                bat 'TD-37.py'  // If it's a Python script
+                // Clone the repository
+                git branch: 'main', url: 'https://github.com/Shilpakcap/TestJenkin.git'
             }
         }
-        stage('Test') {
+        stage('Run TD-37') {
             steps {
-                echo 'Testing...'
-                bat 'TD-37.py'  // Runs test script, check logs
+                script {
+                    // Ensure the working directory is set to where TD-37.py is located
+                    dir('path_to_your_script_directory') {
+                        bat 'python TD-37.py'  // For Windows, 
+                    }
+                }
             }
         }
     }
