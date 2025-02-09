@@ -4,16 +4,13 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building...'
+                sh 'TD-37.py'  // If it's a Python script
             }
         }
         stage('Test') {
             steps {
                 echo 'Testing...'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying...'
+                sh 'TD-37.py'  // Runs test script, check logs
             }
         }
     }
