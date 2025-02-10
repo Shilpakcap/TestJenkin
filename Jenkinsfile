@@ -4,8 +4,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 git branch: 'main', url: 'https://github.com/Shilpakcap/TestJenkin.git'
-		bat 'where python'  // Check Python location
-
+		
             }
         }
         stage('Run TD-37') {
