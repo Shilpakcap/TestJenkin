@@ -13,9 +13,7 @@ pipeline {
         }
         stage('Run Script') {
             steps {
-                //sh 'chmod +x script.sh'  // Enable execute permission for Linux/Mac
-                //sh './script.sh'  // Run the script (for Linux/Mac)
-                bat 'script.bat'  // Uncomment for Windows batch script
+                                bat 'script.bat'  // Uncomment for Windows batch script
             }
         }
     }
