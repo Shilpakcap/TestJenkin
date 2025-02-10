@@ -12,7 +12,7 @@ pipeline {
                 script {
                     // Ensure we're in the Jenkins workspace
                     dir("${WORKSPACE}") {
-                        bat 'python TD-37.py'  // Run the script in the workspace
+                        bat 'python TD-37.py'  
                     }
                 }
             }
