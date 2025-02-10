@@ -3,16 +3,19 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // Clone the repository
                 git branch: 'main', url: 'https://github.com/Shilpakcap/TestJenkin.git'
+                script {
+                    echo "Workspace Directory: ${WORKSPACE}"
+                    bat 'dir'  // Lists all files and folders in the workspace
+                }
             }
         }
         stage('Run TD-37') {
             steps {
                 script {
-                    // Ensure the working directory is set to where TD-37.py is located
-                    dir('path_to_your_script_directory') {
-                        bat 'python TD-37.py'  // For Windows, 
+                    dir("${WORKSPACE}") {
+                        bat 'dir'  // Lists files to check if TD-37.py is present
+                        
                     }
                 }
             }
