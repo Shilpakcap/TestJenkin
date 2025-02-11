@@ -6,25 +6,16 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/Shilpakcap/TestJenkin.git'
             }
         }
+         agent any
+    stages {
         stage('Run Python Scripts') {
             steps {
                 script {
                     def pythonPath = "C:\\Users\\shilpkul\\AppData\\Local\\Programs\\Python\\Python313\\python.exe"
                     def scriptDir = "C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Employee_Page\\Scripts"
-                    
-                    // Get the list of Python scripts
-                    def scriptList = bat(script: "dir /b \"${scriptDir}\\*.py\"", returnStdout: true).trim()
 
-                    if (scriptList) {
-                        def scripts = scriptList.split("\r?\n")
-                        
-                        for (scriptFile in scripts) {
-                            echo "Executing script: ${scriptFile}"
-                            bat "\"${pythonPath}\" \"${scriptDir}\\${scriptFile}\""
-                        }
-                    } else {
-                        echo "No Python scripts found in ${scriptDir}"
-                    }
+                    // Run all Python scripts in the folder
+                    bat "for %f in (${scriptDir}\\*.py) do \"${pythonPath}\" \"%f\""
                 }
             }
         }
