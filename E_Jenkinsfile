@@ -1,0 +1,21 @@
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/Shilpakcap/TestJenkin.git'
+            }
+        }
+        stage('Run E_Jenkinsfile') {
+            steps {
+                script {
+                    // Move to the correct directory before running the file
+                    dir('Scripts') {
+                        // Run the E_Jenkinsfile from the Scripts directory
+                        bat 'jenkinsfile-runner E_Jenkinsfile'  // Replace with appropriate command to run the Jenkinsfile
+                    }
+                }
+            }
+        }
+    }
+}
