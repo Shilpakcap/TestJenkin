@@ -6,11 +6,14 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/Shilpakcap/TestJenkin.git'
             }
         }
-        stage('Verify File Exists') {
+        stage('Run E_Jenkinsfile') {
             steps {
                 script {
-                    bat 'dir /s /b'  // List all files to verify Jenkins sees them
-                    bat 'type Scripts\\E_Jenkinsfile'  // Correct path to the file
+                    // Move to the correct directory before running the file
+                    dir('Scripts') {
+                        // Run the E_Jenkinsfile from the Scripts directory
+                        bat 'jenkinsfile-runner E_Jenkinsfile'  // Replace with appropriate command to run the Jenkinsfile
+                    }
                 }
             }
         }
