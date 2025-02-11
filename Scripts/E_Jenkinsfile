@@ -6,6 +6,15 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/Shilpakcap/TestJenkin.git'
             }
         }
+        stage('Debug Workspace') {
+            steps {
+                script {
+                    bat 'echo Current Directory: %CD%'
+                    bat 'dir /s /b'
+                }
+            }
+        }
+
         stage('List Files') {
             steps {
                 script {
