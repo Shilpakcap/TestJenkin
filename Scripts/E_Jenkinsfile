@@ -6,28 +6,11 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/Shilpakcap/TestJenkin.git'
             }
         }
-        stage('Debug Workspace') {
+        stage('Verify File Exists') {
             steps {
                 script {
-                    bat 'echo Current Directory: %CD%'
-                    bat 'dir /s /b'
-                }
-            }
-        }
-
-        stage('List Files') {
-            steps {
-                script {
-                    bat 'dir /s /b'  // Lists all files and folders for debugging
-                }
-            }
-        }
-        stage('Run Jenkinsfile') {
-            steps {
-                script {
-                    dir('scripts') {  // Navigate to the correct subdirectory
-                        bat 'python E_Jenkinsfile'  // Execute script
-                    }
+                    bat 'dir /s /b'  // List all files to verify Jenkins sees them
+                    bat 'type Scripts\\E_Jenkinsfile'  // Correct path to the file
                 }
             }
         }
