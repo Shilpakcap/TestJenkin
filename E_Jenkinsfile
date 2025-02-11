@@ -6,13 +6,16 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/Shilpakcap/TestJenkin.git'
             }
         }
-        stage('Run TD-194') {
+        stage('Run Python Scripts') {
             steps {
                 script {
-                    dir("${WORKSPACE}") {
-                        // Use the full path to Python
-                       bat '"C:\\Users\\shilpkul\\AppData\\Local\\Programs\\Python\\Python313\\python.exe" "C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Employee_Page\\Scripts\\TD-194.py"'
+                    def pythonPath = "C:\\Users\\shilpkul\\AppData\\Local\\Programs\\Python\\Python313\\python.exe"
+                    def scriptDir = "C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Employee_Page\\Scripts"
 
+                    def files = bat(script: "dir /B \"${scriptDir}\\*.py\"", returnStdout: true).trim().split("\r?\n")
+
+                    for (file in files) {
+                        bat "\"${pythonPath}\" \"${scriptDir}\\${file}\""
                     }
                 }
             }
