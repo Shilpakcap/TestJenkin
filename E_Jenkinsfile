@@ -11,13 +11,19 @@ pipeline {
                 script {
                     def pythonPath = "C:\\Users\\shilpkul\\AppData\\Local\\Programs\\Python\\Python313\\python.exe"
                     def scriptDir = "C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Employee_Page\\Scripts"
-
-                    // Get list of Python scripts using PowerShell to avoid path issues
-                    def files = bat(script: "powershell -Command \"Get-ChildItem -Path '${scriptDir}' -Filter '*.py' | ForEach-Object { $_.Name }\"", returnStdout: true).trim().split("\r?\n")
-
-                    for (file in files) {
-                        echo "Running script: ${file}"
-                        bat "\"${pythonPath}\" \"${scriptDir}\\${file}\""
+                    
+                    // Use PowerShell to list Python files
+                    def fileList = bat(script: "powershell -Command \"Get-ChildItem -Path '${scriptDir}' -Filter '*.py' | ForEach-Object { $_.Name }\"", returnStdout: true).trim()
+                    
+                    if (fileList) {
+                        def files = fileList.split("\r?\n")
+                        
+                        for (file in files) {
+                            echo "Running script: ${file}"
+                            bat "\"${pythonPath}\" \"${scriptDir}\\${file}\""
+                        }
+                    } else {
+                        echo "No Python scripts found in ${scriptDir}"
                     }
                 }
             }
