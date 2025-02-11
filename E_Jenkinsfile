@@ -16,6 +16,7 @@ pipeline {
 
                     // Run all Python scripts in the folder
                     bat "for %f in (${scriptDir}\\*.py) do \"${pythonPath}\" \"%f\""
+                     }
                 }
             }
         }
