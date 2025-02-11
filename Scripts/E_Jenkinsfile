@@ -11,8 +11,8 @@ pipeline {
                 script {
                     // Change to the 'Scripts' directory
                     dir('Scripts') {
-                        // Read and run the Jenkinsfile
-                        load 'E_Jenkinsfile'  // Load the Jenkinsfile for execution
+                        // Run the script directly if it's a batch file or shell script
+                        bat 'E_Jenkinsfile'  // Assuming it's a batch script
                     }
                 }
             }
