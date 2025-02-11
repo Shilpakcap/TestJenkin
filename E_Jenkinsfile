@@ -6,13 +6,12 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/Shilpakcap/TestJenkin.git'
             }
         }
-        stage('Run E_Jenkinsfile') {
+        stage('Run TD-194') {
             steps {
                 script {
-                    // Change to the 'Scripts' directory
-                    dir('Scripts') {
-                        // Run the script directly if it's a batch file or shell script
-                        bat 'E_Jenkinsfile'  // Assuming it's a batch script
+                    dir("${WORKSPACE}") {
+                        // Use the full path to Python
+                        bat '"C:\\Users\\shilpkul\\AppData\\Local\\Programs\\Python\\Python313\\python.exe" TD-194.py'
                     }
                 }
             }
