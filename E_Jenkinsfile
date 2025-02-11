@@ -12,9 +12,11 @@ pipeline {
                     def pythonPath = "C:\\Users\\shilpkul\\AppData\\Local\\Programs\\Python\\Python313\\python.exe"
                     def scriptDir = "C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Employee_Page\\Scripts"
 
-                    def files = bat(script: "dir /B \"${scriptDir}\\*.py\"", returnStdout: true).trim().split("\r?\n")
+                    // Get list of Python scripts using PowerShell to avoid path issues
+                    def files = bat(script: "powershell -Command \"Get-ChildItem -Path '${scriptDir}' -Filter '*.py' | ForEach-Object { $_.Name }\"", returnStdout: true).trim().split("\r?\n")
 
                     for (file in files) {
+                        echo "Running script: ${file}"
                         bat "\"${pythonPath}\" \"${scriptDir}\\${file}\""
                     }
                 }
