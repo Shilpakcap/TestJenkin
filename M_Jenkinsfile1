@@ -1,6 +1,11 @@
 pipeline {
     agent any
     stages {
+        stage('Clean Workspace') {
+            steps {
+                deleteDir()  // Ensures a fresh start
+            }
+        }
         stage('Checkout') {
             steps {
                 git branch: 'main', url: 'https://github.com/Shilpakcap/TestJenkin.git'
@@ -10,9 +15,8 @@ pipeline {
             steps {
                 script {
                     def pythonPath = "C:\\Users\\shilpkul\\AppData\\Local\\Programs\\Python\\Python313\\python.exe"
-                    def scriptDir = "C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Manager Page First Combination\\Scripts"
-                    
-                    // Run all Python scripts in the folder
+                    def scriptDir = "${env.WORKSPACE}\\Manager Scripts\\First Combination"
+
                     bat """
                     for %%f in ("${scriptDir}\\*.py") do (
                         "${pythonPath}" "%%f"
