@@ -6,17 +6,18 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/Shilpakcap/TestJenkin.git'
             }
         }
-        agent any
-        stages {
-            stage('Run Python Scripts') {
-                steps {
-                    script {
-                        def pythonPath = "C:\\Users\\shilpkul\\AppData\\Local\\Programs\\Python\\Python313\\python.exe"
-                        def scriptDir = "C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Employee_Page\\Scripts"
+        stage('Run Python Scripts') {
+            steps {
+                script {
+                    def pythonPath = "C:\\Users\\shilpkul\\AppData\\Local\\Programs\\Python\\Python313\\python.exe"
+                    def scriptDir = "C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Employee_Page\\Scripts"
 
-                        // Run all Python scripts in the folder
-                        bat "for %f in (${scriptDir}\\*.py) do \"${pythonPath}\" \"%f\""
-                     }
+                    // Run all Python scripts in the folder
+                    bat """
+                    for %%f in ("${scriptDir}\\*.py") do (
+                        "${pythonPath}" "%%f"
+                    )
+                    """
                 }
             }
         }
