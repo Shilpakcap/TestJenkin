@@ -9,10 +9,10 @@ pipeline {
         stage('Run E_Jenkinsfile') {
             steps {
                 script {
-                    // Move to the correct directory before running the file
+                    // Change to the 'Scripts' directory
                     dir('Scripts') {
-                        // Run the E_Jenkinsfile from the Scripts directory
-                        bat 'jenkinsfile-runner E_Jenkinsfile'  // Replace with appropriate command to run the Jenkinsfile
+                        // Read and run the Jenkinsfile
+                        load 'E_Jenkinsfile'  // Load the Jenkinsfile for execution
                     }
                 }
             }
