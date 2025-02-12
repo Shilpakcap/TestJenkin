@@ -177,7 +177,6 @@ try:
     log_to_csv(f"Data successfully saved in {csv_file_path}", "INFO")
     
 except Exception as e:
-    # Log the detailed exception message
     logging.error(f"An error occurred: {str(e)}")
     logging.error(f"Exception type: {type(e)}")
     logging.error(f"Page source:\n{driver.page_source}")
