@@ -15,8 +15,8 @@ pipeline {
             steps {
                 script {
                     def pythonPath = "C:\\Users\\shilpkul\\AppData\\Local\\Programs\\Python\\Python313\\python.exe"
-                    def scriptDir = "C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Manager Scripts First Combination\\Scripts"
-
+                    def scriptDir = "C:\ProgramData\Jenkins\.jenkins\workspace\Manager Page First Combination\Manager Scripts\First Combination"
+                    
                     bat """
                     for %%f in ("${scriptDir}\\*.py") do (
                         "${pythonPath}" "%%f"
