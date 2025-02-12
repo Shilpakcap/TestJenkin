@@ -11,7 +11,8 @@ pipeline {
                 script {
                     dir("${WORKSPACE}") {
                         // Use the full path to Python
-                        bat '"C:\\Users\\shilpkul\\AppData\\Local\\Programs\\Python\\Python313\\python.exe" TD-37.py'
+                        bat '"C:\\Users\\shilpkul\\AppData\\Local\\Programs\\Python\\Python313\\python.exe" TD-37.py' 
+                        
                     }
                 }
             }
