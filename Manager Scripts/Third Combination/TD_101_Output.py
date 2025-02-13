@@ -82,13 +82,9 @@ try:
     # Scroll to the dropdown
     driver.execute_script("arguments[0].scrollIntoView();", Grade_dropdown)
     time.sleep(1)
-    # Click the dropdown to make options visible
-    Grade_dropdown.click()
     logging.info("Scrolled and clicked on Grade dropdown...")
-    # Create a Select object
     select = Select(Grade_dropdown)
-    # Select the option by index (adjust index as needed)
-    select.select_by_index(5)  # Adjust index based on requirement
+    select.select_by_index(5)  
     logging.info("Selected Grade from the dropdown...")
     time.sleep(2)
 
@@ -130,7 +126,7 @@ try:
     log_to_csv(f"Extracted Headers: {headers}", "INFO")
 
     # Expected headers
-    expected_headers = [" ,GTD Task Name","Grade", "GTD Location", "Match Band", "Rationale", "Resource Name"]
+    expected_headers = ["","GTD Task Name","Grade", "GTD Location", "Match Band", "Rationale", "Resource Name"]
 
     if [header.lower().strip() for header in headers] == [header.lower().strip() for header in expected_headers]:
         logging.info("Table headers are correct.")
