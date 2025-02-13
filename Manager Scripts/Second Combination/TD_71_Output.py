@@ -51,8 +51,8 @@ try:
         EC.element_to_be_clickable((By.CSS_SELECTOR, "p-button[ng-reflect-label^='Manager Page']"))
     )
     manager_page_button.click()
-    print("Navigated to Manager Page.")
-    print("Navigated to Manager Page.", "INFO")
+    logging.info("Navigated to Manager Page.")
+    logging.info("Navigated to Manager Page.", "INFO")
 
     time.sleep(30)
     # Find and click the Select Demand IDs dropdown
@@ -85,7 +85,7 @@ try:
         EC.element_to_be_clickable((By.XPATH, suggestion_xpath))
     )
 
-    print("Clicking on suggestion 3...")
+    logging.info("Clicking on suggestion 3...")
     suggestion_button.click()
 
     time.sleep(2)
@@ -95,14 +95,14 @@ try:
         EC.element_to_be_clickable((By.XPATH, "/html/body/app-root/app-staffing/app-main-layout/div/div/div[2]/div/div/div[2]/div/div[1]/select"))
     )
     cust_dropdown.click()
-    print("Clicked on Customer dropdown...")
+    logging.info("Clicked on Customer dropdown...")
     time.sleep(2)
     select_cust = WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.XPATH, "/html/body/app-root/app-staffing/app-main-layout/div/div/div[2]/div/div/div[2]/div/div[1]/select/option[64]"))
     )
     select_cust.click()
     cust_dropdown.click()
-    print("Selected Customer from the dropdown...")
+    logging.info("Selected Customer from the dropdown...")
     time.sleep(2)
 
     # Scrolling to find Gradedropdown
@@ -131,7 +131,7 @@ try:
     element = driver.find_element(By.XPATH, '/html/body/app-root/app-staffing/app-main-layout/div/div/div[2]/div/div/div[3]/div/p-button/button/span')
     driver.execute_script("arguments[0].scrollIntoView()", element)
     time.sleep(2)
-    print("Scrolling to the Show me list submit button...")
+    logging.info("Scrolling to the Show me list submit button...")
 
     start_time = time.time()
     #Click on show me list of demands button
@@ -139,7 +139,7 @@ try:
         EC.element_to_be_clickable((By.XPATH, "/html/body/app-root/app-staffing/app-main-layout/div/div/div[2]/div/div/div[3]/div/p-button/button/span"))
     )
     submit_button.click()
-    print("Submit button clicked...")
+    logging.info("Submit button clicked...")
 
     # Measure response time
     table = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "p-table")))
@@ -155,7 +155,7 @@ try:
     log_to_csv(f"Extracted Headers: {headers}", "INFO")
 
     # Expected headers for validation
-    expected_headers = ["GTD Task Name", "Grade", "GTD Location", "Match Band", "Rationale", "Resource Name"]
+    expected_headers = ["","GTD Task Name", "Grade", "GTD Location", "Match Band", "Rationale", "Resource Name"]
 
     if headers == expected_headers:
         logging.info("Table headers are correct.")

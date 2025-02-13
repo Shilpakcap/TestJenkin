@@ -104,7 +104,7 @@ try:
     driver.execute_script("arguments[0].click();", updated_button)
     logging.info("Updated button clicked successfully.")
   
-    time.sleep(50)
+    time.sleep(2)
 
     # Wait for Table to Load
     table = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "p-table")))

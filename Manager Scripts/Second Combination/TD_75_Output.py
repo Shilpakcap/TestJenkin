@@ -46,8 +46,7 @@ try:
     # Open the webpage
     driver.get("http://localhost:4200/assignmentAssistant")
     wait = WebDriverWait(driver, 150)  # Adjust timeout as necessary
-    print("Website loaded successfully.")
-
+    logging.info("Website loaded successfully.")
 
     # Navigate to Manager Page
     manager_page_button = wait.until(
@@ -91,7 +90,6 @@ try:
     query_box.send_keys(" Show me list of resources for selected demands")
     logging.info("Query entered")
 
-    
     # Scrolling to find the Query
     element = driver.find_element(By.XPATH,
                                   "/html/body/app-root/app-staffing/app-main-layout/div/div/div[2]/div/div/div[4]")

@@ -46,7 +46,7 @@ try:
     # Open the webpage
     driver.get("http://localhost:4200/assignmentAssistant")
     wait = WebDriverWait(driver, 150)  # Adjust timeout as necessary
-    print("Website loaded successfully.")
+    logging.info("Website loaded successfully.")
 
 
     # Navigate to Manager Page
