@@ -114,7 +114,7 @@ try:
     log_to_csv(f"Extracted Headers: {headers}", "INFO")
 
     # Expected headers
-    expected_headers = ["GTD Task Name", "Grade", "GTD Location", "Match Band", "Rationale", "Resource Name"]
+    expected_headers = ["","GTD Task Name", "Grade", "GTD Location", "Match Band", "Rationale", "Resource Name"]
     if headers == expected_headers:
         logging.info("Table headers are correct.")
         log_to_csv("Table headers are correct.", "INFO")
