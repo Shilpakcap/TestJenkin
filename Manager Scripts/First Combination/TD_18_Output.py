@@ -6,28 +6,47 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
 import os
+import csv
+import logging
 
-# Start the WebDriver
+# Initialize WebDriver
 driver = webdriver.Chrome()
 
-# Get the script name without extension
+# Get script name and define paths
 script_name = os.path.splitext(os.path.basename(__file__))[0]
-
-# Generate the directory to save the CSV file
 csv_directory = os.path.join("C:\\Shilpa\\GenAI", "Scripts_Results", script_name)
+os.makedirs(csv_directory, exist_ok=True)
 
-# Create the directory if it doesn't exist
-if not os.path.exists(csv_directory):
-    os.makedirs(csv_directory)
-
-# Generate the full file path for the CSV
+# Define file paths
 csv_file_path = os.path.join(csv_directory, "output_data.csv")
+log_file_path = os.path.join(csv_directory, "script_logs.txt")
+log_csv_path = os.path.join(csv_directory, "script_logs.csv")
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    handlers=[
+        logging.FileHandler(log_file_path, mode='a'),
+        logging.StreamHandler()
+    ]
+)
+
+# Function to log messages to CSV
+def log_to_csv(message, level="INFO"):
+    with open(log_csv_path, mode='a', newline='') as csv_log_file:
+        csv_writer = csv.writer(csv_log_file)
+        csv_writer.writerow([time.strftime("%Y-%m-%d %H:%M:%S"), level, message])
+
+# Function to validate headers
+def validate_headers(actual_headers, expected_headers):
+    return [header.lower().strip() for header in actual_headers] == [header.lower().strip() for header in expected_headers]
 
 try:
     # Open the webpage
     driver.get("http://10.207.20.55:4200/assignmentAssistant")
     wait = WebDriverWait(driver, 150)  # Adjust timeout as necessary
-    print("Website loaded successfully.")
+    logging.info("Website loaded successfully.")
 
     # Wait for the query box to appear
     query_box = wait.until(EC.presence_of_element_located((By.ID, "customQuery")))
@@ -45,58 +64,63 @@ try:
 
     submit_query.click()
     grid = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "div.ag-root-wrapper-body")))
-    print("Grid Found.")
+    logging.info("Grid Found.")
 
     # Record the time after the grid has loaded
     end_time = time.time()
 
     # Calculate response time
     response_time = end_time - start_time
-    print(f"Query response time: {response_time:.2f} seconds")
+    logging.info(f"Query response time: {response_time:.2f} seconds")
 
     # Extract rows
     rows = grid.find_elements(By.CSS_SELECTOR, "div.ag-row")
-    print(f"Number of rows: {len(rows)}")
+    logging.info(f"Number of rows: {len(rows)}")
 
-    # Extract header (if applicable)
-    header = grid.find_elements(By.CSS_SELECTOR, "div.ag-header-cell")
-    actual_headers = [cell.text.strip() for cell in header]
-    expected_headers = [
-        "GTD Task Name", "GTD Task Skills", "Grade", "GTD Location", "Percentage Match", "Rationale", "Resource Name"
-    ]
-    print(f"Actual Headers: {actual_headers}")
+     # Extract Headers
+    header_cells = driver.find_elements(By.CSS_SELECTOR, "thead tr th")
+    headers = [cell.text.strip() for cell in header_cells]
+    logging.info(f"Extracted Headers: {headers}")
+    log_to_csv(f"Extracted Headers: {headers}", "INFO")
 
-    if actual_headers == expected_headers:
-        print("Headers are correct.")
+    expected_headers = [" ", "GTD Task Name", "Grade", "GTD Location", "Match Band", "Rationale", "Resource Name"]
+
+    if validate_headers(headers, expected_headers):
+        logging.info("Table headers are correct.")
+        log_to_csv("Table headers are correct.", "INFO")
     else:
-        print(f"Headers are incorrect. Expected: {expected_headers}")
+        logging.warning(f"Headers mismatch! Expected: {expected_headers}, Found: {headers}")
+        log_to_csv(f"Headers mismatch! Expected: {expected_headers}, Found: {headers}", "WARNING")
 
-    # Open the CSV file to write the data
+    # Extract Data with Pagination
     with open(csv_file_path, mode='w', newline='') as file:
         writer = csv.writer(file)
+        writer.writerow(headers + ["Response Time (seconds)"])
 
-        # Write the header row into the CSV
-        writer.writerow(actual_headers)
+        while True:
+            rows = driver.find_elements(By.CSS_SELECTOR, "tbody tr")
 
-        # Extract and validate rows
-        for i, row in enumerate(rows, start=1):
-            cells = row.find_elements(By.CSS_SELECTOR, "div.ag-cell")
-            cell_data = [cell.text.strip() for cell in cells]
-            print(f"Row {i}: {cell_data}")
-            
-            # Write each row of data to the CSV
-            writer.writerow(cell_data)
+            for row in rows:
+                cells = row.find_elements(By.CSS_SELECTOR, "td")
+                cell_data = [cell.text.strip() for cell in cells]
 
-            # Example: Validate "Percentage Match" column (5th column, index 4)
-            if len(cell_data) >= 5:  # Ensure the column exists
-                if not re.match(r"^\d+(\.\d+)?%$", cell_data[4]):
-                    print(f"Row {i}, Column 5 (Percentage Match) is not in the correct format: {cell_data[4]}")
+                if cell_data:
+                    cell_data.append(f"{response_time:.2f}")
+                writer.writerow(cell_data)
 
-    print(f"Data has been saved to {csv_file_path}")
+            # Handle Pagination
+            try:
+                next_button = driver.find_element(By.CSS_SELECTOR, ".p-paginator-next")
+                if "p-disabled" in next_button.get_attribute("class"):
+                    break
+                next_button.click()
+                time.sleep(3)
+            except:
+                break
 
-    # Optional: Wait before closing the browser for observation
-    time.sleep(10)
-
+    logging.info(f"Data successfully saved in {csv_file_path}")
+    log_to_csv(f"Data successfully saved in {csv_file_path}", "INFO")
+   
 finally:
     # Close the browser after testing
     driver.quit()
