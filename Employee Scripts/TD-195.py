@@ -154,7 +154,7 @@ try:
     updated_button.click()
     logging.info("Button clicked successfully.")
 
-    time.sleep(50)
+    time.sleep(2)
        
     #Wait for the grid/table to load
     table = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "p-table")))
