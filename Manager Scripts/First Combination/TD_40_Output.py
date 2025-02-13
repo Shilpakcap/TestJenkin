@@ -75,14 +75,8 @@ try:
 
     # Step 2: Enter location in the input field
     from selenium.webdriver.support.ui import Select
-
-    # Locate the dropdown element
     dropdown_element = wait.until(EC.presence_of_element_located((By.ID, "location")))
-
-    # Initialize the Select class
     dropdown = Select(dropdown_element)
-
-    # Select by visible text
     dropdown.select_by_visible_text("Chicago, US")
 
     # Select by value attribute
@@ -118,7 +112,7 @@ try:
     updated_button.click()
     logging.info("Button clicked successfully.")
 
-    time.sleep(50)
+    time.sleep(2)
        
     #Wait for the grid/table to load
     table = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "p-table")))

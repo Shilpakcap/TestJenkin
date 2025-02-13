@@ -59,7 +59,7 @@ try:
     logging.info("Navigated to Manager Page.")
     log_to_csv("Navigated to Manager Page.", "INFO")
 
-    time.sleep(10)
+    time.sleep(5)
 
     # Click desired suggestion
     suggestion_list_container = wait.until(
@@ -107,7 +107,7 @@ try:
     logging.info("Customer 'Dell' selected.")
     log_to_csv("Customer 'Dell' selected.", "INFO")
 
-    time.sleep(10)
+    time.sleep(5)
 
     # Select Pu
     grade_dropdown = wait.until(EC.presence_of_element_located((By.ID, "pu")))
@@ -116,7 +116,7 @@ try:
     logging.info("Pu 'ED-DE-CNE' selected.")
     log_to_csv("Pu 'ED-DE-CNE' selected.", "INFO")
 
-    time.sleep(10)
+    time.sleep(5)
 
     # Select Industry
     grade_dropdown = wait.until(EC.presence_of_element_located((By.ID, "industry")))
@@ -125,7 +125,7 @@ try:
     logging.info("Industry 'Telecoms' selected.")
     log_to_csv("Industry 'Telecoms' selected.", "INFO")
 
-    time.sleep(10)
+    time.sleep(5)
     
     # Click the button
     button_selector = "p-button[ng-reflect-label^='Show me list of open demands,']"

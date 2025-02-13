@@ -59,7 +59,7 @@ try:
     logging.info("Navigated to Manager Page.")
     log_to_csv("Navigated to Manager Page.", "INFO")
 
-    time.sleep(10)
+    time.sleep(5)
 
     # Click desired suggestion
     suggestion_list_container = wait.until(
@@ -82,32 +82,12 @@ try:
         log_to_csv(f"Desired suggestion '{desired_text}' not found.", "ERROR")
         exit()
 
-    # Select Role
-    #role_input = wait.until(EC.presence_of_element_located((By.ID, "role")))
-
-    #preferred_role = "Software Engineer"  
-    # role_input.clear()  
-    # role_input.send_keys(preferred_role)  
-    # logging.info(f"Entered Role: {preferred_role}")
-    # log_to_csv(f"Entered Role: {preferred_role}", "INFO")
-
-    # time.sleep(2)  
-
-     # Select Grade
+    # Select Grade
     grade_dropdown = wait.until(EC.presence_of_element_located((By.ID, "grade")))
     dropdown = Select(grade_dropdown)
     dropdown.select_by_visible_text("C1")
     logging.info("Grade 'C1' selected.")
     log_to_csv("Grade 'C1' selected.", "INFO")
-
-     # Select Customer
-    # grade_dropdown = wait.until(EC.presence_of_element_located((By.ID, "customer")))
-    # dropdown = Select(grade_dropdown)
-    # dropdown.select_by_visible_text("Dell")
-    # logging.info("Customer 'Dell' selected.")
-    # log_to_csv("Customer 'Dell' selected.", "INFO")
-
-    time.sleep(10)
 
     # # Select Pu
     grade_dropdown = wait.until(EC.presence_of_element_located((By.ID, "pu")))
@@ -116,17 +96,7 @@ try:
     logging.info("Pu 'ED-DE-CNE' selected.")
     log_to_csv("Pu 'ED-DE-CNE' selected.", "INFO")
 
-    # time.sleep(10)
-
-    # # Select Industry
-    # grade_dropdown = wait.until(EC.presence_of_element_located((By.ID, "industry")))
-    # dropdown = Select(grade_dropdown)
-    # dropdown.select_by_visible_text("Telecoms")
-    # logging.info("Industry 'Telecoms' selected.")
-    # log_to_csv("Industry 'Telecoms' selected.", "INFO")
-
-    # time.sleep(10)
-    
+    time.sleep(2)
     # Click the button
     button_selector = "p-button[ng-reflect-label^='Show me list of open demands,']"
     button = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, button_selector)))

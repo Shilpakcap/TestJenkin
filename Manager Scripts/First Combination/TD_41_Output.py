@@ -89,7 +89,7 @@ try:
     logging.info("Customer 'Dell' selected.")
     log_to_csv("Customer 'Dell' selected.", "INFO")
 
-    time.sleep(10)
+    time.sleep(2)
 
     # Click the button
     button_selector = "p-button[ng-reflect-label^='Show me list of open demands,']"

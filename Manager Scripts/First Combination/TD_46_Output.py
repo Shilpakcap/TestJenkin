@@ -59,7 +59,7 @@ try:
     logging.info("Navigated to Manager Page.")
     log_to_csv("Navigated to Manager Page.", "INFO")
 
-    time.sleep(10)
+    time.sleep(5)
 
     # Click desired suggestion
     suggestion_list_container = wait.until(
