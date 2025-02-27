@@ -103,7 +103,7 @@ try:
                                   "//html/body/app-root/app-staffing/app-main-layout/div/div/div[2]/div/div/div[2]/div/div[5]/select")
     driver.execute_script("arguments[0].scrollIntoView()", element)
     time.sleep(2)
-    print("Scrolling to find the Grade dropdown")
+    logging.info("Scrolling to find the Grade dropdown")
 
     # Select Grade
     Grade_dropdown = WebDriverWait(driver, 10).until(

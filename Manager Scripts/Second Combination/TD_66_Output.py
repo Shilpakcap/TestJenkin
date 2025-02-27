@@ -85,7 +85,7 @@ try:
         EC.element_to_be_clickable((By.XPATH, suggestion_xpath))
     )
 
-    print("Clicking on suggestion 3...")
+    logging.info("Clicking on suggestion 3...")
     suggestion_button.click()
 
     time.sleep(2)

@@ -94,7 +94,7 @@ try:
                                     "/html/body/app-root/app-staffing/app-main-layout/div/div/div[2]/div/div/div[2]/div/div[3]/select"))
     )
     ind_dropdown.click()
-    print("Clicked on Industry...")
+    logging.info("Clicked on Industry...")
     time.sleep(2)
 
     # Select Automotive from the dropdown
@@ -105,7 +105,7 @@ try:
     auto_dropdown.click()
     # Optional: Close dropdown if needed
     ind_dropdown.click()
-    print("Selected Automotive on Industry from dropdown...")
+    logging.info("Selected Automotive on Industry from dropdown...")
     time.sleep(2)
 
     
